@@ -9,3 +9,46 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String?
+  email     String?
+  password  String?
+  updatedAt DateTime?
+  deletedAt DateTime?
+  Adoption  Adoption[]
+
+  @@map("users")
+}
+
+model Pet {
+  id        Int        @id @default(autoincrement())
+  name      String?
+  about     String?     @db.Text
+  image     String?
+  location  String?
+  age       Int?
+  weight    Decimal?
+  race      String?
+  size      String?
+  since     String?
+  updatedAt DateTime?
+  deletedAt DateTime?
+  Adoption  Adoption[]
+
+  @@map("pets")
+}
+
+model Adoption {
+  id        Int       @id @default(autoincrement())
+  price     Decimal?
+  pet       Pet?      @relation(fields: [pet_id], references: [id])
+  pet_id    Int
+  user      User?      @relation(fields: [user_id], references: [id])
+  user_id   Int
+  updatedAt DateTime?
+  deletedAt DateTime?
+
+  @@map("adoptions")
+}
