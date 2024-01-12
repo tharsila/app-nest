@@ -29,7 +29,7 @@ model Pet {
   image     String?
   location  String?
   age       Int?
-  weight    Decimal?
+  weight    Float?
   race      String?
   size      String?
   since     String?
