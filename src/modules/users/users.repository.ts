@@ -7,9 +7,14 @@ export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
   async createUser(user: User): Promise<User> {
-    return await this.prisma.user.create({
+    const createdUser = await this.prisma.user.create({
       data: user,
     });
+
+    return {
+      ...createdUser,
+      password: undefined,
+    };
   }
 
   async findAllUsers(): Promise<User[]> {
@@ -40,6 +45,14 @@ export class UsersRepository {
       },
       data: {
         deletedAt: new Date(),
+      },
+    });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.prisma.user.findFirst({
+      where: {
+        email,
       },
     });
   }
