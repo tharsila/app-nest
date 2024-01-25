@@ -22,20 +22,30 @@ export class UsersRepository {
   }
 
   async findOneUser(id: number): Promise<User> {
-    return await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findFirst({
       where: {
         id,
       },
     });
+
+    return {
+      ...user,
+      password: undefined,
+    };
   }
 
   async updateUser(id: number, user: User): Promise<User> {
-    return await this.prisma.user.update({
+    const updatedUser = await this.prisma.user.update({
       where: {
         id,
       },
       data: user,
     });
+
+    return {
+      ...updatedUser,
+      password: undefined,
+    };
   }
 
   async removeUser(id: number): Promise<void> {
