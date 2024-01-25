@@ -23,12 +23,17 @@ export class UsersService {
     throw new BadRequestException('Email já cadastrado');
   }
 
-  findAll() {
-    return this.usersRepository.findAllUsers();
+  async findAll() {
+    return await this.usersRepository.findAllUsers();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const userExists = await this.usersRepository.findById(id);
+    if (userExists) {
+      return await this.usersRepository.findOneUser(id);
+    }
+
+    throw new BadRequestException('Usuário não encontrado');
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
