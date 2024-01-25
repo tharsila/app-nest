@@ -36,11 +36,30 @@ export class UsersService {
     throw new BadRequestException('Usuário não encontrado');
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const userExists = await this.usersRepository.findById(id);
+
+    if (userExists) {
+      if (updateUserDto.password) {
+        const data = {
+          ...updateUserDto,
+          password: await bcrypt.hash(updateUserDto.password, 10),
+        };
+        return await this.usersRepository.updateUser(id, data);
+      }
+      return await this.usersRepository.updateUser(id, updateUserDto);
+    }
+
+    throw new BadRequestException('Usuário não encontrado');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const userExists = this.usersRepository.findById(id);
+
+    if (userExists) {
+      return await this.usersRepository.removeUser(id);
+    }
+
+    throw new BadRequestException('Usuário não encontrado');
   }
 }
