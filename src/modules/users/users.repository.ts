@@ -56,4 +56,12 @@ export class UsersRepository {
       },
     });
   }
+
+  async findById(id: number): Promise<User> {
+    return await this.prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
 }
