@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpException,
+  Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -31,21 +31,53 @@ export class UsersController {
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    try {
+      return this.usersService.findAll();
+    } catch (error) {
+      console.error(error?.response);
+      throw new HttpException(
+        error?.response?.message,
+        error?.response?.statusCode,
+      );
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    try {
+      return this.usersService.findOne(+id);
+    } catch (error) {
+      console.error(error?.response);
+      throw new HttpException(
+        error?.response?.message,
+        error?.response?.statusCode,
+      );
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Put(':id')
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      return this.usersService.update(+id, updateUserDto);
+    } catch (error) {
+      console.error(error?.response);
+      throw new HttpException(
+        error?.response?.message,
+        error?.response?.statusCode,
+      );
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  remove(@Param('id') id: number) {
+    try {
+      return this.usersService.remove(+id);
+    } catch (error) {
+      console.error(error?.response);
+      throw new HttpException(
+        error?.response?.message,
+        error?.response?.statusCode,
+      );
+    }
   }
 }
