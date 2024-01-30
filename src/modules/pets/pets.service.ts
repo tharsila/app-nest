@@ -8,7 +8,7 @@ import { Pet } from './entities/pet.entity';
 export class PetsService {
   constructor(private petsRepository: PetsRepository) {}
   async create(createPetDto: CreatePetDto): Promise<Pet> {
-    return await this.petsRepository.createPet(createPetDto);
+    return await this.petsRepository.createdPet(createPetDto);
   }
 
   findAll() {
