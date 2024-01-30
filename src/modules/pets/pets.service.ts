@@ -11,19 +11,19 @@ export class PetsService {
     return await this.petsRepository.createdPet(createPetDto);
   }
 
-  findAll() {
-    return `This action returns all pets`;
+  async findAll(): Promise<Pet[]> {
+    return await this.petsRepository.findAllPets();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pet`;
+  async findOne(id: number): Promise<Pet> {
+    return await this.petsRepository.findPetById(id);
   }
 
-  update(id: number, updatePetDto: UpdatePetDto) {
-    return `This action updates a #${id} pet`;
+  async update(id: number, updatePetDto: UpdatePetDto): Promise<Pet> {
+    return await this.petsRepository.updatedPetById(id, updatePetDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pet`;
+  async remove(id: number): Promise<void> {
+    await this.petsRepository.removePetById(id);
   }
 }
