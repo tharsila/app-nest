@@ -6,7 +6,7 @@ import { Pet } from './entities/pet.entity';
 export class PetsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createdPet(pet: Pet): Promise<Pet> {
+  async create(pet: Pet): Promise<Pet> {
     const createdPet = await this.prisma.pet.create({
       data: pet,
     });
@@ -14,11 +14,11 @@ export class PetsRepository {
     return createdPet;
   }
 
-  async findAllPets(): Promise<Pet[]> {
+  async findAll(): Promise<Pet[]> {
     return await this.prisma.pet.findMany();
   }
 
-  async findPetById(id: number): Promise<Pet> {
+  async findById(id: number): Promise<Pet> {
     return await this.prisma.pet.findFirst({
       where: {
         id,
@@ -26,7 +26,7 @@ export class PetsRepository {
     });
   }
 
-  async updatedPetById(id: number, pet: Pet): Promise<Pet> {
+  async update(id: number, pet: Pet): Promise<Pet> {
     return await this.prisma.pet.update({
       where: {
         id,
@@ -35,7 +35,7 @@ export class PetsRepository {
     });
   }
 
-  async removePetById(id: number): Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.prisma.pet.update({
       where: {
         id,
