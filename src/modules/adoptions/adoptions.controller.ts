@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AdoptionsService } from './adoptions.service';
 import { CreateAdoptionDto } from './dto/create-adoption.dto';
 import { UpdateAdoptionDto } from './dto/update-adoption.dto';
@@ -18,17 +26,20 @@ export class AdoptionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.adoptionsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdoptionDto: UpdateAdoptionDto) {
+  @Put(':id')
+  update(
+    @Param('id') id: number,
+    @Body() updateAdoptionDto: UpdateAdoptionDto,
+  ) {
     return this.adoptionsService.update(+id, updateAdoptionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.adoptionsService.remove(+id);
   }
 }
