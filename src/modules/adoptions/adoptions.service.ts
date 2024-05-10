@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAdoptionDto } from './dto/create-adoption.dto';
 import { UpdateAdoptionDto } from './dto/update-adoption.dto';
+import { AdoptionsRepository } from './adoptions.repository';
+import { UsersRepository } from '../users/users.repository';
+import { PetsRepository } from '../pets/pets.repository';
+import { Adoption } from './entities/adoption.entity';
 
 @Injectable()
 export class AdoptionsService {
-  create(createAdoptionDto: CreateAdoptionDto) {
-    return 'This action adds a new adoption';
+  constructor(
+    private adoptionsRepository: AdoptionsRepository,
+    usersRepository: UsersRepository,
+    petsRepository: PetsRepository,
+  ) {}
+
+  create(createAdoptionDto: CreateAdoptionDto): Promise<Adoption> {
+    return this.adoptionsRepository.create(createAdoptionDto);
   }
 
   findAll() {
