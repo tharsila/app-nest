@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 export class UsersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async createUser(user: User): Promise<User> {
+  async create(user: User): Promise<User> {
     const createdUser = await this.prisma.user.create({
       data: user,
     });
@@ -17,11 +17,11 @@ export class UsersRepository {
     };
   }
 
-  async findAllUsers(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return await this.prisma.user.findMany();
   }
 
-  async findOneUser(id: number): Promise<User> {
+  async findOne(id: number): Promise<User> {
     const user = await this.prisma.user.findFirst({
       where: {
         id,
@@ -34,7 +34,7 @@ export class UsersRepository {
     };
   }
 
-  async updateUser(id: number, user: User): Promise<User> {
+  async update(id: number, user: User): Promise<User> {
     const updatedUser = await this.prisma.user.update({
       where: {
         id,
@@ -48,7 +48,7 @@ export class UsersRepository {
     };
   }
 
-  async removeUser(id: number): Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.prisma.user.update({
       where: {
         id,

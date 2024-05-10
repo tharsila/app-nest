@@ -17,20 +17,20 @@ export class UsersService {
         ...createUserDto,
         password: await bcrypt.hash(createUserDto.password, 10),
       };
-      return this.usersRepository.createUser(data);
+      return this.usersRepository.create(data);
     }
 
     throw new BadRequestException('Email já cadastrado');
   }
 
   async findAll() {
-    return await this.usersRepository.findAllUsers();
+    return await this.usersRepository.findAll();
   }
 
   async findOne(id: number) {
     const userExists = await this.usersRepository.findById(id);
     if (userExists) {
-      return await this.usersRepository.findOneUser(id);
+      return await this.usersRepository.findOne(id);
     }
 
     throw new BadRequestException('Usuário não encontrado');
@@ -45,9 +45,9 @@ export class UsersService {
           ...updateUserDto,
           password: await bcrypt.hash(updateUserDto.password, 10),
         };
-        return await this.usersRepository.updateUser(id, data);
+        return await this.usersRepository.update(id, data);
       }
-      return await this.usersRepository.updateUser(id, updateUserDto);
+      return await this.usersRepository.update(id, updateUserDto);
     }
 
     throw new BadRequestException('Usuário não encontrado');
@@ -57,7 +57,7 @@ export class UsersService {
     const userExists = this.usersRepository.findById(id);
 
     if (userExists) {
-      return await this.usersRepository.removeUser(id);
+      return await this.usersRepository.remove(id);
     }
 
     throw new BadRequestException('Usuário não encontrado');
